@@ -2,3 +2,6 @@ interface:
   display_name: "需求设计流转"
   short_description: "将功能想法流转为经复核的AI可执行设计文档。"
   default_prompt: "使用 feature-design-flow-zh 将这个功能需求整理成标准化、可复核、适合 AI 开发的设计文档流。"
+
+# 这是最小可用的 Codex skill UI 元数据。
+# 如果接入其他 agent 平台，请按平台规范补充能力边界、输入要求、图标、颜色或启动参数等字段。
