@@ -8,16 +8,19 @@ Purpose: define what the feature is trying to achieve.
 
 Include:
 - Background and goal
-- In-scope and out-of-scope items
+- Current-phase scope
+- Non-goals
 - Core user flows
 - Functional requirements
-- Data/API expectations when known
+- Data/API expectations
 - Acceptance criteria
 - Future extensions
 
 Avoid:
 - Deep implementation details that belong in module designs
 - Decisions that are still under discussion without marking them as assumptions
+
+Completion standard: after reading the requirement doc, another session should know why the feature exists, who it serves, what is in scope, what is explicitly out of scope, and how it will be accepted.
 
 ## QA Decision Record
 
@@ -28,7 +31,12 @@ Include:
 - Decision
 - Rationale or tradeoff
 - Status: confirmed, pending, deferred
-- Date when decisions are likely to evolve
+- Date or version when useful
+
+Status values:
+- confirmed: can be used as design input
+- pending: requires user confirmation before relying on it
+- deferred: recorded but out of current scope
 
 Use this document to prevent the same question from being re-litigated across sessions.
 
@@ -45,6 +53,8 @@ Include:
 - Current open items
 
 Avoid turning this into a full implementation spec.
+
+Completion standard: a new session can read only the overview and know which docs to read first, which modules to implement first, and which modules are blocked.
 
 ## Common Context
 
@@ -79,15 +89,21 @@ Include:
 
 Module docs should be specific enough to code from, but not so rigid that they duplicate every final line of code.
 
+Completion standard: another AI session can read the common context and this module doc, start implementation, and know how to verify the result.
+
 ## Progress Document
 
 Purpose: act as the process gate.
 
 Track design and development separately. Require explicit confirmation before changing statuses that unlock the next stage.
 
+Prefer a "current blocker / next action" field over a generic "current stage" field, because it tells the next session what to do.
+
 ## Recheck Document
 
 Purpose: find contradictions before implementation.
+
+AI should actively run the recheck and output an issue summary. The user confirms each issue decision.
 
 Record:
 - Issue title

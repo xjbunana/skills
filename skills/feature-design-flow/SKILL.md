@@ -7,17 +7,55 @@ description: Turn a feature idea, rough requirement, or product discussion into 
 
 Use this skill to guide a feature from fuzzy intent to reviewed design documents that another AI coding session can implement safely. The goal is not to over-document; the goal is to make assumptions, decisions, module boundaries, and review gates explicit.
 
-## Core Rule
+## Resource Location
 
-Separate design from development. Do not start implementation until the design stage is complete, cross-checked, and confirmed by the user.
+Paths such as `references/...` and `assets/templates/...` are relative to the skill root directory, the same directory that contains `SKILL.md`.
 
-The durable flow is:
+When using bundled resources:
+
+1. If the runtime provides the skill path, use that path as the skill root.
+2. If only `SKILL.md` is known, use the directory containing `SKILL.md` as the skill root.
+3. Read reference files from `<skill-root>/references/...`.
+4. Copy templates from `<skill-root>/assets/templates/...`.
+
+Do not resolve these paths from the project working directory. The project docs output directory and the skill installation directory are separate concepts.
+
+## Flow Choice
+
+Choose lightweight flow or full flow before creating documents.
+
+Use lightweight flow when most of these are true:
+
+- The feature affects only 1 or 2 modules.
+- There is no complex data model or cross-system state transition.
+- There are no external APIs, payment flows, permissions, audit requirements, AI tools, or prompt behavior risks.
+- The user mainly needs a fast path from idea to implementable design.
+
+Lightweight flow:
+
+```text
+requirement doc + QA decision record -> module design -> small recheck -> development
+```
+
+Use full flow when any of these are true:
+
+- The feature spans 3 or more modules, frontend/backend boundaries, or multiple services.
+- It includes database design, auth, state transitions, async work, or external dependencies.
+- It includes AI prompts, tool calling, model behavior rules, or other unstable behavior.
+- Multiple people will collaborate, or the feature needs long-term maintainability.
+- The user explicitly asks for a standardized design document flow.
+
+Full flow:
 
 ```text
 feature idea -> requirement doc -> QA decision record -> design overview
 -> common context -> module design docs -> progress gate
 -> cross-document review -> confirmed revisions -> development
 ```
+
+## Core Rule
+
+Separate design from development. In full flow, do not start implementation until the design stage is complete, cross-checked, and confirmed by the user. In lightweight flow, still preserve requirements, key decisions, module design, and recheck conclusions.
 
 ## When Starting
 
@@ -54,7 +92,7 @@ Keep each document focused:
 - Progress doc: gatekeeper for design and development status. Require confirmation before marking stages complete.
 - Recheck doc: cross-document issues, severity, status, decision, and required edits.
 
-For more detail, read `references/document-roles.md`.
+For more detail, read `<skill-root>/references/document-roles.md`.
 
 ## Design Workflow
 
@@ -65,6 +103,7 @@ For more detail, read `references/document-roles.md`.
 2. Run QA clarification.
    - Convert ambiguity into explicit questions and decisions.
    - Record decisions in the QA document with rationale and date when useful.
+   - Use only these QA statuses: confirmed, pending, deferred.
 
 3. Split modules.
    - Build a dependency-ordered design overview.
@@ -82,15 +121,31 @@ For more detail, read `references/document-roles.md`.
 6. Maintain progress gates.
    - Track design and development separately.
    - Do not mark a design document complete until the user confirms it.
+   - Before confirmation, check the document against the Definition of Done.
    - After confirmation, re-check upstream docs and sync differences before moving forward.
 
-7. Recheck before development.
-   - Compare requirements, QA decisions, overview, common context, and module docs.
-   - Record issues by severity and status.
-   - Apply confirmed changes to source docs.
+7. Recheck actively before development.
+   - AI should compare requirements, QA decisions, overview, common context, and module docs, then output an issue summary.
+   - The user confirms each issue decision: apply change, defer, or keep pending.
    - Only then enter development.
 
-Use `references/flow-rules.md` for gatekeeping details and `references/review-checklist.md` for review coverage.
+Use `<skill-root>/references/flow-rules.md` for gatekeeping details and `<skill-root>/references/review-checklist.md` for review coverage.
+
+## Definition of Done
+
+Before marking a design document complete, ensure:
+
+- Goals, scope, and non-goals do not conflict.
+- Key QA questions have statuses, and blockers are not ignored.
+- Module dependencies and development order are clear.
+- APIs include method, path, request example, response example, and error boundary when relevant.
+- Data design includes fields, types, requiredness, status meanings, and query/index notes when relevant.
+- Business logic covers the main path and at least one error or edge path.
+- AI behavior includes prompt/tool trigger conditions, parameter sources, and response handling when relevant.
+- Verification points are testable and not just "works correctly".
+- Unresolved items are marked pending or deferred.
+
+See `<skill-root>/references/flow-rules.md` for the full gate checklist.
 
 ## Human Interaction
 
@@ -108,7 +163,7 @@ Make reasonable low-risk wording and template choices yourself.
 
 ## Templates
 
-Use the templates in `assets/templates/` when creating a new flow:
+Use the templates in `<skill-root>/assets/templates/` when creating a new flow:
 
 - `requirement.md`
 - `qa-decisions.md`
@@ -118,4 +173,4 @@ Use the templates in `assets/templates/` when creating a new flow:
 - `progress.md`
 - `review-template.md`
 
-Copy only the templates needed for the user's task and adapt them to local naming conventions.
+Templates include small filled examples. Keep examples while drafting if useful, then remove them from final project docs when they would confuse the actual feature content.

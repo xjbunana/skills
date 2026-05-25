@@ -1,5 +1,7 @@
 # Design Review: <Feature Name>
 
+AI should actively perform this review before development and output this document or an equivalent issue list. The user confirms the decision for each issue.
+
 ## Issue Summary
 
 | # | Issue | Document | Severity | Status | Decision/Notes |
@@ -23,6 +25,18 @@
 **Problem:** 
 
 **Suggested Fix:** 
+
+**Decision:** pending
+
+## Filled Example: Notification Default Conflict [pending]
+
+**Document:** `1-requirements.md`, `01-notification-settings-data-model.md`
+
+**Location:** requirement acceptance criteria; data model default-value section
+
+**Problem:** Requirement says marketing notifications default to disabled, but the data model uses `marketing_notify_enabled DEFAULT true`.
+
+**Suggested Fix:** Change the data model default to `false` and document the source of the default-value rule.
 
 **Decision:** pending
 

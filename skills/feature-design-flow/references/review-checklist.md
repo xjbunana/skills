@@ -2,6 +2,10 @@
 
 Use this checklist during cross-document recheck.
 
+Execution responsibility: AI should actively run this review and output an issue summary or review document. The user confirms each issue decision. Do not wait for the user to manually check every item before performing the review.
+
+Suggested output fields: issue title, affected document, location, severity, problem, suggested fix, current status.
+
 ## Scope
 
 - Requirement goals match module designs.

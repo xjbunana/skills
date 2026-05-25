@@ -2,3 +2,6 @@ interface:
   display_name: "Feature Design Flow"
   short_description: "Turn feature ideas into reviewed AI-ready design docs."
   default_prompt: "Use feature-design-flow to turn this feature idea into a structured, reviewed design document flow."
+
+# This is the minimum useful Codex skill UI metadata.
+# If integrating with another agent platform, extend this file with that platform's capability, input, icon, color, or launch metadata requirements.
